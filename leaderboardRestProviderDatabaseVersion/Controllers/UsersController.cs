@@ -54,7 +54,7 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
                         List<Score> scoreList = new List<Score>();
                         while (reader.Read())
                         {
-                            Score score = ReadScore(reader);
+                            Score score = ScoresController.ReadScore(reader);
                             scoreList.Add(score);
                         }
                         return scoreList;
@@ -63,26 +63,8 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
             }
         }
 
-        // TODO move to scorecontroller
-        private static Score ReadScore(IDataRecord reader)
-        {
-            int id = reader.GetInt32(0);
-            int userid = reader.GetInt32(1);
-            int points = reader.GetInt32(2);
-            DateTime? created;
-            if (reader.IsDBNull(3)) created = null;
-            else created = reader.GetDateTime(3);
 
-            Score score = new Score
-            {
-                Id = id,
-                UserId = userid,
-                Points = points,
-                Created = created
-            };
-            return score;
-        }
-
+       
         private static User ReadUser(IDataRecord reader)
         {
             int id = reader.GetInt32(0);
