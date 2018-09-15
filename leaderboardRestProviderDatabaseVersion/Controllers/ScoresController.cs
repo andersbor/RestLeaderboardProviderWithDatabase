@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using leaderboardRestProviderDatabaseVersion.model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace leaderboardRestProviderDatabaseVersion.Controllers
@@ -15,13 +11,7 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
     [ApiController]
     public class ScoresController : ControllerBase
     {
-        private static string GetConnectionString()
-        {
-            StreamReader reader = new StreamReader("connectionstring.txt");
-            return reader.ReadLine();
-        }
-
-        private readonly string _connectionString = GetConnectionString();
+        private readonly string _connectionString = ConnectionstringHelper.GetConnectionString();
   
         // GET: api/Scores
         [HttpGet]
