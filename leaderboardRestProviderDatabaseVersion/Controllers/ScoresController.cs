@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using leaderboardRestProviderDatabaseVersion.model;
@@ -14,16 +15,21 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
     [ApiController]
     public class ScoresController : ControllerBase
     {
-        private const string ConnectionString =
-            "Server=tcp:anbo-databaseserver.database.windows.net,1433;Initial Catalog=anbobase;Persist Security Info=False;User ID=anbo;Password=Secret12;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private static string GetConnectionString()
+        {
+            StreamReader reader = new StreamReader("connectionstring.txt");
+            return reader.ReadLine();
+        }
 
+        private readonly string _connectionString = GetConnectionString();
+  
         // GET: api/Scores
         [HttpGet]
         [Route("")]
         public IEnumerable<Score> Get()
         {
             const string selectString = "select * from leaderboardscore order by point desc";
-            using (SqlConnection databaseConnection = new SqlConnection(ConnectionString))
+            using (SqlConnection databaseConnection = new SqlConnection(_connectionString))
             {
                 databaseConnection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(selectString, databaseConnection))
