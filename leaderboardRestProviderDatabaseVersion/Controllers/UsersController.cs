@@ -11,7 +11,7 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly string _connectionString = ConnectionstringHelper.GetConnectionString();
+        private readonly string _connectionString = Connectionstring.GetConnectionString();
 
         // GET: api/Users
         [HttpGet]

@@ -11,7 +11,7 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
     [ApiController]
     public class ScoresController : ControllerBase
     {
-        private readonly string _connectionString = ConnectionstringHelper.GetConnectionString();
+        private readonly string _connectionString = Connectionstring.GetConnectionString();
   
         // GET: api/Scores
         [HttpGet]
