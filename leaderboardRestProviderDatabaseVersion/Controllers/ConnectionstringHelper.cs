@@ -10,8 +10,13 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
     {
         internal static string GetConnectionString()
         {
+            return "Server=tcp:anbo-databaseserver.database.windows.net,1433;Initial Catalog=anbobase;Persist Security Info=False;User ID=anbo;Password=Hemmelig14;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            /*
             StreamReader reader = new StreamReader("connectionstring.txt");
-            return reader.ReadLine();
+            string str = reader.ReadLine();
+            reader.Close();
+            return str;
+            */
         }
     }
 }

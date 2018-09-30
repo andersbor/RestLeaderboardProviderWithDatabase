@@ -11,15 +11,14 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private const string ConnectionString =
-            "Server=tcp:anbo-databaseserver.database.windows.net,1433;Initial Catalog=anbobase;Persist Security Info=False;User ID=anbo;Password=Secret12;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        private readonly string _connectionString = ConnectionstringHelper.GetConnectionString();
 
         // GET: api/Users
         [HttpGet]
         public IEnumerable<User> Get()
         {
             const string selectString = "select * from leaderboarduser order by id";
-            using (SqlConnection databaseConnection = new SqlConnection(ConnectionString))
+            using (SqlConnection databaseConnection = new SqlConnection(_connectionString))
             {
                 databaseConnection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(selectString, databaseConnection))
@@ -43,7 +42,7 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
         {
             // TODO combine with GetAll from scoreController
             const string selectString = "select * from leaderboardscore where userid=@userid order by point desc";
-            using (SqlConnection databaseConnection = new SqlConnection(ConnectionString))
+            using (SqlConnection databaseConnection = new SqlConnection(_connectionString))
             {
                 databaseConnection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(selectString, databaseConnection))
@@ -91,7 +90,7 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
         public User Get(int id)
         {
             const string selectString = "select * from leaderboarduser where id=@id";
-            using (SqlConnection databaseConnection = new SqlConnection(ConnectionString))
+            using (SqlConnection databaseConnection = new SqlConnection(_connectionString))
             {
                 databaseConnection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(selectString, databaseConnection))
@@ -113,7 +112,7 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
         {
             // TODO how to get the object form the database (in a easy way?)
             const string insertStudent = "insert into leaderboarduser (username, passwordhashed) values (@username, @passwordhashed)";
-            using (SqlConnection databaseConnection = new SqlConnection(ConnectionString))
+            using (SqlConnection databaseConnection = new SqlConnection(_connectionString))
             {
                 databaseConnection.Open();
                 using (SqlCommand insertCommand = new SqlCommand(insertStudent, databaseConnection))
@@ -145,7 +144,7 @@ namespace leaderboardRestProviderDatabaseVersion.Controllers
         public int Delete(int id)
         {
             const string deleteString = "delete from leaderboarduser where id=@id";
-            using (SqlConnection databaseConnection = new SqlConnection(ConnectionString))
+            using (SqlConnection databaseConnection = new SqlConnection(_connectionString))
             {
                 databaseConnection.Open();
                 using (SqlCommand insertCommand = new SqlCommand(deleteString, databaseConnection))
